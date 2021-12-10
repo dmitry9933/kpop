@@ -1,0 +1,21 @@
+<div class="page-wrapper">
+  <div class="table">
+    <h1>Favorites</h1>
+    <div
+      class="row"
+      *ngFor="let hero of someInput"
+      (click)="handleOpenInfo(hero, theBoundCallback)"
+    >
+      <div class="row-text">
+        <div>First Name: {{ hero.name.first }}</div>
+        <div>Last Name: {{ hero.name.last }}</div>
+        <div>Gender: {{ hero.gender }}</div>
+        <div>Date Of Birth: {{ hero.dob.date }}</div>
+        <div>Age: {{ hero.dob.age }}</div>
+      </div>
+      <button class="btn" (click)="onFavorite(hero)">
+        {{ isFavorite(hero) ? "Remove from Favorites" : "Add To Favorite" }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { MainWebWorker } from "./worker"
 import {
   MatDialog,
   MatDialogRef,
@@ -10,6 +11,10 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
+
+
+
+
 export class AppComponent {
   title = 'angular3';
 
@@ -17,7 +22,7 @@ export class AppComponent {
   data: any = [];
   favorites: any[] = [];
 
-
+  
   theBoundCallback: Function=()=>{};
 
   list:any[]=[]
@@ -51,19 +56,13 @@ export class AppComponent {
   }
 
   onFetchList = async () => {
-    const newData: any = await fetch(
-      'http://jsonplaceholder.typicode.com/todos',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-      }
-    );
-    const processed = await newData.json();
-    console.log(processed)
-    this.list = processed
- 
+  
+    
+    const newData = await MainWebWorker.fetchDataWrapper('http://jsonplaceholder.typicode.com/todos')
+    this.list = newData;
+
+    await MainWebWorker.fetchData()
+    this.list = MainWebWorker.data;
   };
   prevdef=(event:any)=>{
     event.preventdefault()
@@ -89,3 +88,5 @@ export class DialogOverviewExampleDialog {
     this.dialogRef.close();
   }
 }
+
+
